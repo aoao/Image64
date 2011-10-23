@@ -1,0 +1,20 @@
+== overview =========
+
+get cross-site image at js
+
+== change proxyUrl ==
+
+Image64.proxyUrl = 'proxy.html';
+
+== use ==============
+
+var xiaoming = new Image64();
+xiaoming.onload = function() {
+	document.body.appendChild(xiaoming);
+}
+xiaoming.setSrc('http://abc/xxx.jpg');
+
+
+== bugs  ============
+
+@aoao http://twitter.com/aoao

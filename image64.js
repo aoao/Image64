@@ -50,7 +50,7 @@ Image64.prototype = {
 
 Image64.imgs = {};
 
-Image64.proxyUrl = 'http://test2/mag/proxy.html';
+Image64.proxyUrl = 'proxy.html';
 
 Image64.proxy = function(){
 	var proxy = document.getElementById('_image64proxy_');
