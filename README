@@ -1,12 +1,12 @@
-== overview =========
+== Overview =========
 
 get cross-site image at js
 
-== change proxyUrl ==
+== Change proxy ==
 
 Image64.proxyUrl = 'proxy.html';
 
-== use ==============
+== Usage ============
 
 var xiaoming = new Image64();
 xiaoming.onload = function() {
@@ -14,7 +14,11 @@ xiaoming.onload = function() {
 }
 xiaoming.setSrc('http://abc/xxx.jpg');
 
+== Todo  ============
 
-== bugs  ============
+* IE support (flash)
+* queue 
+
+== Bugs  ============
 
 @aoao http://twitter.com/aoao

@@ -1,3 +1,13 @@
+/*
+ *
+ *  Image64 0.1
+ *  Website: https://github.com/aoao/Image64 
+ *  author: aoao (loaoao@gmail.com http://www.aoao.org.cn)
+ *  Date: 2011/10/23
+ *  Released under the MIT License.
+ * 
+ */
+ 
 function Image64() {
 	return this.init();
 }
