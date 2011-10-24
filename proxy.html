@@ -8,7 +8,7 @@
 <script type="text/javascript">
 
 window.onmessage = function(d){
-	var data =d.data.split("|");
+	var data =d.data.split("(^______^)");
 	data ={
 		'key':data[0],
 		'url':data[1]
@@ -18,10 +18,10 @@ window.onmessage = function(d){
 
 function getImage(data){
 	var url =data.url;
-	var aticon=document.createElement('canvas');
-	var ctx = aticon.getContext('2d');
 	var img = new Image();
     img.onload = function(){
+    	var aticon=document.createElement('canvas');
+		var ctx = aticon.getContext('2d');
     	var width = img.width,
     		height = img.height;
 	    aticon.setAttribute('width',width);
@@ -29,14 +29,15 @@ function getImage(data){
     	ctx.drawImage(img,0,0,width,height);
     	dataURL = aticon.toDataURL();
     	window.parent.postMessage(
-    		{
-    			'key':data.key,
-    			'url':url,
-    			'data':dataURL
-    		}
+    		data.key + "(o______o)" + url + "(o______o)" + dataURL
     	,"*")
     	delete ctx;
     }
+    img.onerror = img.onabort = function(e){
+		window.parent.postMessage(
+    		data.key + "(o______o)" + url + "(o______o)" + "onerror"
+    	,"*")
+	}
     img.src = url; 
 }
 </script>

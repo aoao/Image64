@@ -1,10 +1,11 @@
 == Overview =========
 
-get cross-site image at js
+Get Cross Domain Images with Canvas
 
-== Change proxy ==
+== Change proxy =====
 
-Image64.proxyUrl = 'proxy.html';
+Image64.proxyUrl = 'http://img.domain.com/proxy.html';
+
 
 == Usage ============
 
@@ -12,12 +13,15 @@ var xiaoming = new Image64();
 xiaoming.onload = function() {
 	document.body.appendChild(xiaoming);
 }
+xiaoming.onerror = function() {
+	alert('T_T');
+}
 xiaoming.setSrc('http://abc/xxx.jpg');
 
-== Todo  ============
+== v2  ==============
 
-* IE support (flash)
-* queue 
+* IE9 support 
+* onerror 
 
 == Bugs  ============
 

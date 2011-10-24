@@ -1,13 +1,12 @@
 /*
  *
- *  Image64 0.1
+ *  Image64 0.2
  *  Website: https://github.com/aoao/Image64 
  *  author: aoao (loaoao@gmail.com http://www.aoao.org.cn)
- *  Date: 2011/10/23
+ *  Date: 2011/10/24
  *  Released under the MIT License.
  * 
  */
- 
 function Image64() {
 	return this.init();
 }
@@ -18,9 +17,14 @@ Image64.prototype = {
 	setSrc: function(url){
 		//this.src = url;//test
 		this.url = url;
+		if(url.split('/')[2] != Image64.proxyUrl.split('/')[2]){
+			throw new Error("cross domain!!");
+			return false;
+		};
 		this.run();
 	},
 	run: function() {
+		
 		this.key = (new Date()).getTime().toString(36);
 		Image64.addImg(this);
 		Image64.proxy();
@@ -31,6 +35,7 @@ Image64.prototype = {
 		}
 	},
 	finish: function() {
+		
 		this.src = this.data;
 	},
 	init: function() {
@@ -54,8 +59,7 @@ Image64.prototype = {
 			},
 			100)
 		}
-	}
-*/
+	}*/
 }
 
 Image64.imgs = {};
@@ -75,7 +79,11 @@ Image64.proxy = function(){
 		};
 		document.body.appendChild(ifr);
 		//document.body.insertBefore(ifr, document.body.childNodes[0]);
-		window.addEventListener('message',function(d){Image64.message(d)})
+		if(window.addEventListener){
+			window.addEventListener('message',function(d){Image64.message(d)})
+		}else{
+			window.attachEvent('onmessage',function(d){Image64.message(d)});
+		}
 	}
 }
 Image64.hasProxy = false;
@@ -91,6 +99,7 @@ Image64.queue = [];
 Image64.addQueue = function(d){
 	Image64.queue.push(d);
 	Image64.check();
+		
 }
 Image64.check =function(){
 	if(Image64.timer){clearTimeout(Image64.timer)}
@@ -106,7 +115,7 @@ Image64.check =function(){
 }
 
 Image64.post =function(me){
-	document.getElementById('_image64proxy_').contentWindow.postMessage( me.key + "|" + me.url,'*')
+	document.getElementById('_image64proxy_').contentWindow.postMessage( me.key + "(^______^)" + me.url,'*')
 }
 
 Image64.message = function(d){
@@ -114,7 +123,16 @@ Image64.message = function(d){
 	if(d.origin != proxyDomain){
 		return false;
 	}
-	var x = Image64.imgs[d.data.key];
-	x.data = d.data.data;
-	x.finish();
+	var data = d.data.split("(o______o)");
+	
+	var key = data[0],url = data[1],imgData = data[2];
+	var x = Image64.imgs[key];
+	if(x){
+		if(imgData == 'onerror'){
+			if(x.onerror){x.onerror();}
+		}else{
+			x.data = imgData;
+			x.finish();
+		}
+	}
 }
