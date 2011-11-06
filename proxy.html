@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>image proxy</title>
+</head>
+<body>
+<script type="text/javascript">
+
+window.onmessage = function(d){
+	var data =d.data.split("(^______^)");
+	data ={
+		'key':data[0],
+		'url':data[1]
+	}
+	getImage(data);
+}
+
+function getImage(data){
+	var url =data.url;
+	var img = new Image();
+    img.onload = function(){
+    	var aticon=document.createElement('canvas');
+		var ctx = aticon.getContext('2d');
+    	var width = img.width,
+    		height = img.height;
+	    aticon.setAttribute('width',width);
+		aticon.setAttribute('height',height);
+    	ctx.drawImage(img,0,0,width,height);
+    	dataURL = aticon.toDataURL();
+    	window.parent.postMessage(
+    		data.key + "(o______o)" + url + "(o______o)" + dataURL
+    	,"*")
+    	delete ctx;
+    }
+    img.onerror = img.onabort = function(e){
+		window.parent.postMessage(
+    		data.key + "(o______o)" + url + "(o______o)" + "onerror"
+    	,"*")
+	}
+    img.src = url; 
+}
+</script>
+</body>
+</html>
